@@ -1,3 +1,5 @@
+# this program reach 0.98514 accuracy on Kaggle public score
+
 import numpy as np
 import pandas as pd
 from keras.models import Sequential

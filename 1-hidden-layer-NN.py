@@ -1,3 +1,5 @@
+# this program reach 0.97571 accuracy on Kaggle public score
+
 import theano
 import pandas as pd
 import numpy as np
