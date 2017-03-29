@@ -51,32 +51,31 @@ tf.global_variables_initializer().run()
 
 # batch size
 batch_size = 100
+
 # training session
 for _ in range(1000):  # 1000 epochs
-  # random sample, with batch size equal to 100
-  idx = np.random.randint(num_samples_train, size=batch_size)
-  batch_xs = X_train[idx, :]
-  batch_ys = Y_train[idx, :]
+    # random sample, with batch size equal to 100
+    idx = np.random.randint(num_samples_train, size=batch_size)
+    batch_xs = X_train[idx, :]
+    batch_ys = Y_train[idx, :]
 
-  # feed batch into placeholder and run the session
-  sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+    # feed batch into placeholder and run the session
+    sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
-  # print out the training session
-  if _ % 100 == 0:
-    print('Training Step:' + str(_) + '  Loss = ' +
-          str(sess.run(cross_entropy, {x: batch_xs, y_: batch_ys})))
+    # print out the training session
+    if _ % 100 == 0:
+        print('Training Step:' + str(_) + '  Loss = ' +
+              str(sess.run(cross_entropy, {x: batch_xs, y_: batch_ys})))
 
 # predicting session
 Y_test = []
 for i in range(num_samples_test):
-  # feed the text sample
-  feed_dict = {x: X_test[i, :].reshape(1, -1)}
+    # feed the text sample
+    feed_dict = {x: X_test[i, :].reshape(1, -1)}
 
-  # predict test label using trained model
-  prediction = sess.run(y, feed_dict).argmax()
-  Y_test.append(prediction)
-
-print(Y_test)
+    # predict test label using trained model
+    prediction = sess.run(y, feed_dict).argmax()
+    Y_test.append(prediction)
 
 # predictions for competition!
 submission = pd.DataFrame({"ImageId": list(range(1, len(Y_test) + 1)),
