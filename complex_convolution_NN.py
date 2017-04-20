@@ -36,19 +36,35 @@ num_classes = Y_train.shape[1]
 
 # complex convolution neural network
 model = Sequential()
+
+# the first block of convolutional-pooling layers
 model.add(Convolution2D(30, 5, 5, border_mode='valid',
                         input_shape=(1, 28, 28), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# the second block of convolutional-pooling layers
 model.add(Convolution2D(15, 3, 3, activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
+
+# dropout layer
 model.add(Dropout(0.2))
+
+# fully connected layer
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dense(50, activation='relu'))
+
+# output layer
 model.add(Dense(num_classes, activation='softmax'))
+
+# compile model
 model.compile(loss='categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
+
+# train the model
 model.fit(X_train, Y_train, nb_epoch=10, batch_size=200, verbose=2)
+
+# predict on test data
 Y_test = model.predict(X_test, batch_size=200, verbose=0)
 Y_test = list(Y_test.argmax(axis=1))
 

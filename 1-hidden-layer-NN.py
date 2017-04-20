@@ -1,9 +1,7 @@
-# this program reach 0.97571 accuracy on Kaggle public score
+# this program reach 0.97629 accuracy on Kaggle public score
 
-import theano
 import pandas as pd
 import numpy as np
-import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
@@ -34,16 +32,29 @@ Y_train = np_utils.to_categorical(Y_train)
 
 # 1 hidden layer neural network
 model = Sequential()
-model.add(Dense(num_pixels, input_dim=num_pixels,
-                init='normal', activation='relu'))
-model.add(Dense(num_classes, init='normal', activation='softmax'))
+
+# input layer
+model.add(Dense(num_pixels, input_dim=num_pixels, activation='relu'))
+
+# hidden layer
+model.add(Dense(num_pixels // 2, activation='relu'))
+model.add(Dropout(0.2))
+
+# output layer
+model.add(Dense(num_classes, activation='softmax'))
+
+# compile model
 model.compile(loss='categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
-model.fit(X_train, Y_train, nb_epoch=10, batch_size=200, verbose=2)
-Y_test = model.predict(X_test, batch_size=200, verbose=0)
+
+# train model
+model.fit(X_train, Y_train, epochs=30, batch_size=300, verbose=0)
+
+# predict on test data
+Y_test = model.predict(X_test, batch_size=300, verbose=0)
 Y_test = list(Y_test.argmax(axis=1))
 
 # predictions for competition!
 submission = pd.DataFrame({"ImageId": list(range(1, len(Y_test) + 1)),
                            "Label": Y_test})
-submission.to_csv('outputs/1-hidden-layer-NN.csv', index=False)
+submission.to_csv('outputs/1-hidden-layer-NN-keras.csv', index=False)
