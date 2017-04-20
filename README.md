@@ -1,3 +1,5 @@
 # MNIST
-Solutions for a project assignment of an academic course. In this assignment, we tried to classify handwritten digits from MNIST data using both "normal" machine learning and simple neural network model.
+Classifying handwritten digit from [MNIST data](http://yann.lecun.com/exdb/mnist/). 
+
+The models were tested on the [Kaggle Digit Recognizer competition](https://www.kaggle.com/c/digit-recognizer). This [program](https://github.com/Thang30/MNIST/blob/master/complex_convolution_NN.py) achieved the best accuracy.
   
